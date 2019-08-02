@@ -10,7 +10,7 @@ public class ToDoApp {
     @Id
     private int id;
     private String task;
-    private LocalDateTime dueDate;
+    private String dueDate;
 
     public int getId() {
         return id;
@@ -28,11 +28,11 @@ public class ToDoApp {
         this.task = task;
     }
 
-    public LocalDateTime getDueDate() {
+    public String getDueDate() {
         return dueDate;
     }
 
-    public void setLocalDueDate(LocalDateTime dueDate) {
+    public void setDueDate(String dueDate) {
         this.dueDate = dueDate;
     }
 
