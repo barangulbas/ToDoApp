@@ -2,15 +2,15 @@ package com.example.demo.model;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import java.time.LocalDateTime;
 
 @Entity
 public class ToDoApp {
 
     @Id
     private int id;
+    private int priority;
     private String task;
-    private String dueDate;
+
 
     public int getId() {
         return id;
@@ -28,12 +28,12 @@ public class ToDoApp {
         this.task = task;
     }
 
-    public String getDueDate() {
-        return dueDate;
+    public int getPriority() {
+        return priority;
     }
 
-    public void setDueDate(String dueDate) {
-        this.dueDate = dueDate;
+    public void setPriority(int priority) {
+        this.priority = priority;
     }
 
     @Override
@@ -41,7 +41,7 @@ public class ToDoApp {
         return "ToDoApp{" +
                 "id=" + id +
                 ", task='" + task + '\'' +
-                ", dueDate='" + dueDate + '\'' +
+                ", priority='" + priority + '\'' +
                 '}';
     }
 }
