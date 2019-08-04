@@ -3,6 +3,8 @@ package com.example.demo.Services;
 import com.example.demo.Repositories.ToDoAppRepo;
 import com.example.demo.model.ToDoApp;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Service;
 
 
@@ -14,6 +16,7 @@ public class ToDoAppServices {
 
     @Autowired
     public ToDoAppRepo toDoAppRepo;
+
 
     public ToDoAppServices(){
 
@@ -45,4 +48,11 @@ public class ToDoAppServices {
         toDoAppRepo.delete(tsk);
     }
 
+    public List<ToDoApp> sortByPriority(){
+        return toDoAppRepo.findByOrderByPriorityDesc();
+    }
+
+    public List<ToDoApp> sortByTask(){
+        return toDoAppRepo.findByOrderByTaskAsc();
+    }
 }

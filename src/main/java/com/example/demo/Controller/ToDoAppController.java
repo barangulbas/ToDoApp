@@ -40,6 +40,16 @@ public class ToDoAppController {
         return "deleted";
     }
 
+    @RequestMapping("/task/sortByPriority")
+    public List<ToDoApp> sortByPriority(){
+        return toDoAppServices.sortByPriority();
+    }
+
+    @RequestMapping("/task/sortByTask")
+    public List<ToDoApp> sortByTask(){
+        return toDoAppServices.sortByTask();
+    }
+
 
 
 }
