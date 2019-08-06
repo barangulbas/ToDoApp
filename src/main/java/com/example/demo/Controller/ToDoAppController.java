@@ -14,7 +14,7 @@ public class ToDoAppController {
     @Autowired
     private ToDoAppServices toDoAppServices;
 
-    @RequestMapping(path="/task")
+    @RequestMapping(path="/task/all")
     public List<ToDoApp> getAllTasks(){
         return toDoAppServices.getTasks();
     }
@@ -40,16 +40,8 @@ public class ToDoAppController {
         return "deleted";
     }
 
-    @RequestMapping("/task/sortByPriority")
-    public List<ToDoApp> sortByPriority(){
-        return toDoAppServices.sortByPriority();
+    @RequestMapping("/task")
+    public List<ToDoApp> sortBy(@RequestParam String sort, @RequestParam(defaultValue = "Asc") String alignment) throws Exception {
+        return toDoAppServices.sortBy(sort, alignment);
     }
-
-    @RequestMapping("/task/sortByTask")
-    public List<ToDoApp> sortByTask(){
-        return toDoAppServices.sortByTask();
-    }
-
-
-
 }

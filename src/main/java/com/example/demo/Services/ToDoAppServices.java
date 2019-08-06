@@ -3,8 +3,6 @@ package com.example.demo.Services;
 import com.example.demo.Repositories.ToDoAppRepo;
 import com.example.demo.model.ToDoApp;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Service;
 
 
@@ -48,11 +46,27 @@ public class ToDoAppServices {
         toDoAppRepo.delete(tsk);
     }
 
-    public List<ToDoApp> sortByPriority(){
-        return toDoAppRepo.findByOrderByPriorityDesc();
+    public List<ToDoApp> sortBy(String sort, String alignment) throws Exception {
+
+        if (sort.equals("priority")) {
+            if (alignment.equals("Asc")) {
+                return toDoAppRepo.findByOrderByPriorityAsc();
+            } else if (alignment.equals("Desc")) {
+                return toDoAppRepo.findByOrderByPriorityDesc();
+            } else {
+                throw new Exception("Type 'Asc' or 'Desc' ");
+            }
+        } else if (sort.equals("task")) {
+            if (alignment.equals("Asc")) {
+                return toDoAppRepo.findByOrderByTaskAsc();
+            }
+            else{
+                throw new Exception("Only option is 'Asc' ");
+            }
+        }
+        else{
+            throw new Exception("Type 'priority' or 'task' ");
+        }
     }
 
-    public List<ToDoApp> sortByTask(){
-        return toDoAppRepo.findByOrderByTaskAsc();
-    }
 }

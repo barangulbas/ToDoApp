@@ -1,12 +1,16 @@
 package com.example.demo.model;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.Table;
 
 @Entity
+@Table(name = "tasks")
 public class ToDoApp {
 
     @Id
+    @GeneratedValue
     private int id;
     private int priority;
     private String task;
