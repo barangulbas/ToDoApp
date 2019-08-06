@@ -14,13 +14,8 @@ public class ToDoAppController {
     @Autowired
     private ToDoAppServices toDoAppServices;
 
-    @RequestMapping(path="/task/all")
-    public List<ToDoApp> getAllTasks(){
-        return toDoAppServices.getTasks();
-    }
-
     @RequestMapping("/task/{id}")
-    public Optional<ToDoApp> getSpecificTask(@PathVariable int id) {
+    public Optional<ToDoApp> getSpecificTask(@PathVariable Long id) {
         return toDoAppServices.getTask(id);
     }
 
@@ -35,13 +30,13 @@ public class ToDoAppController {
     }
 
     @DeleteMapping("/task/delete/{id}")
-    public String deleteSelectedTask(@PathVariable int id){
+    public String deleteSelectedTask(@PathVariable Long id){
         toDoAppServices.deleteTask(id);
         return "deleted";
     }
 
     @RequestMapping("/task")
-    public List<ToDoApp> sortBy(@RequestParam String sort, @RequestParam(defaultValue = "Asc") String alignment) throws Exception {
-        return toDoAppServices.sortBy(sort, alignment);
+    public List<ToDoApp> getAllOrSortOrFilter(@RequestParam(defaultValue = "") String sort, @RequestParam(defaultValue = "") String label, @RequestParam (defaultValue = "0") Long priority, @RequestParam(defaultValue = "Asc") String alignment) throws Exception {
+        return toDoAppServices.getParameter(sort, label, priority, alignment);
     }
 }

@@ -11,16 +11,17 @@ public class ToDoApp {
 
     @Id
     @GeneratedValue
-    private int id;
-    private int priority;
+    private Long id;
+    private Long priority;
     private String task;
+    private String label;
 
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -32,20 +33,29 @@ public class ToDoApp {
         this.task = task;
     }
 
-    public int getPriority() {
+    public Long getPriority() {
         return priority;
     }
 
-    public void setPriority(int priority) {
+    public void setPriority(Long priority) {
         this.priority = priority;
+    }
+
+    public String getLabel() {
+        return label;
+    }
+
+    public void setLabel(String label) {
+        this.label = label;
     }
 
     @Override
     public String toString() {
         return "ToDoApp{" +
                 "id=" + id +
+                ", priority=" + priority +
                 ", task='" + task + '\'' +
-                ", priority='" + priority + '\'' +
+                ", label='" + label + '\'' +
                 '}';
     }
 }

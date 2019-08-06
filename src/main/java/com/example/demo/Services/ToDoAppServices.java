@@ -24,7 +24,7 @@ public class ToDoAppServices {
         return toDoAppRepo.findAll();
     }
 
-    public Optional<ToDoApp> getTask(int id) {
+    public Optional<ToDoApp> getTask(Long id) {
         return toDoAppRepo.findById(id);
     }
 
@@ -41,11 +41,25 @@ public class ToDoAppServices {
         return task;
     }
 
-    public void deleteTask(int id){
+    public void deleteTask(Long id){
         ToDoApp tsk = toDoAppRepo.getOne(id);
         toDoAppRepo.delete(tsk);
     }
 
+    public List<ToDoApp> getParameter(String sort, String label, Long priority, String alignment) throws Exception {
+        if(!sort.equals("")){
+            return sortBy(sort, alignment);
+        }
+        else if(!label.equals("")){
+            return filterByLabel(label,priority);
+        }
+        else if(priority!=0){
+            return filterByPriority(priority,label);
+        }
+        else{
+            return getTasks();
+        }
+    }
     public List<ToDoApp> sortBy(String sort, String alignment) throws Exception {
 
         if (sort.equals("priority")) {
@@ -68,5 +82,15 @@ public class ToDoAppServices {
             throw new Exception("Type 'priority' or 'task' ");
         }
     }
+
+    public List<ToDoApp> filterByLabel(String label, Long priority){
+
+        return toDoAppRepo.findByLabel(label);
+    }
+
+    public List<ToDoApp> filterByPriority(Long priority,String label){
+        return toDoAppRepo.findByPriority(priority);
+    }
+
 
 }
