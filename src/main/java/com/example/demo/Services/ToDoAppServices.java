@@ -6,7 +6,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import java.util.Optional;
 
 @Service
@@ -46,15 +51,20 @@ public class ToDoAppServices {
         toDoAppRepo.delete(tsk);
     }
 
-    public List<ToDoApp> getParameter(String sort, String label, Long priority, String alignment) throws Exception {
+    public List<ToDoApp> getParameter(String sort, String label, Long priority, String dueDate, String alignment) throws Exception {
+        DateFormat df = new SimpleDateFormat("yyyy/MM/dd");
+        Date date = df.parse(dueDate);
         if(!sort.equals("")){
             return sortBy(sort, alignment);
         }
         else if(!label.equals("")){
-            return filterByLabel(label,priority);
+            return filterByLabel(label);
         }
         else if(priority!=0){
-            return filterByPriority(priority,label);
+            return filterByPriority(priority);
+        }
+        else if(!dueDate.equals("")){
+            return filterByDueDate(date);
         }
         else{
             return getTasks();
@@ -70,7 +80,8 @@ public class ToDoAppServices {
             } else {
                 throw new Exception("Type 'Asc' or 'Desc' ");
             }
-        } else if (sort.equals("task")) {
+        }
+        else if (sort.equals("task")) {
             if (alignment.equals("Asc")) {
                 return toDoAppRepo.findByOrderByTaskAsc();
             }
@@ -78,18 +89,32 @@ public class ToDoAppServices {
                 throw new Exception("Only option is 'Asc' ");
             }
         }
+        else if(sort.equals("dueDate")){
+            if (alignment.equals("Asc")) {
+                return toDoAppRepo.findByOrderByDueDateAsc();
+            } else if (alignment.equals("Desc")) {
+                return toDoAppRepo.findByOrderByDueDateDesc();
+            } else {
+                throw new Exception("Type 'Asc' or 'Desc' ");
+            }
+        }
         else{
-            throw new Exception("Type 'priority' or 'task' ");
+            throw new Exception("Type 'priority' || 'task' || 'dueDate' ");
         }
     }
 
-    public List<ToDoApp> filterByLabel(String label, Long priority){
+    public List<ToDoApp> filterByLabel(String label){
 
         return toDoAppRepo.findByLabel(label);
     }
 
-    public List<ToDoApp> filterByPriority(Long priority,String label){
+    public List<ToDoApp> filterByPriority(Long priority){
         return toDoAppRepo.findByPriority(priority);
+    }
+
+    public List<ToDoApp> filterByDueDate(Date date) {
+
+        return toDoAppRepo.findByDueDate(date);
     }
 
 

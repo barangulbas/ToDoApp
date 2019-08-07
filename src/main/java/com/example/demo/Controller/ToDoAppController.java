@@ -5,6 +5,7 @@ import com.example.demo.model.ToDoApp;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -36,7 +37,11 @@ public class ToDoAppController {
     }
 
     @RequestMapping("/task")
-    public List<ToDoApp> getAllOrSortOrFilter(@RequestParam(defaultValue = "") String sort, @RequestParam(defaultValue = "") String label, @RequestParam (defaultValue = "0") Long priority, @RequestParam(defaultValue = "Asc") String alignment) throws Exception {
-        return toDoAppServices.getParameter(sort, label, priority, alignment);
+    public List<ToDoApp> getAllOrSortOrFilter(@RequestParam(defaultValue = "") String sort,
+                                              @RequestParam(defaultValue = "") String label,
+                                              @RequestParam (defaultValue = "0") Long priority,
+                                              @RequestParam(defaultValue = "2010/01/04") String dueDate,
+                                              @RequestParam(defaultValue = "Asc") String alignment) throws Exception {
+        return toDoAppServices.getParameter(sort, label, priority, dueDate, alignment);
     }
 }
