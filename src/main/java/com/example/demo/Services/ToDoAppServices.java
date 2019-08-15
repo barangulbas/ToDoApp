@@ -52,8 +52,7 @@ public class ToDoAppServices {
     }
 
     public List<ToDoApp> getParameter(String sort, String label, Long priority, String dueDate, String alignment) throws Exception {
-        DateFormat df = new SimpleDateFormat("yyyy/MM/dd");
-        Date date = df.parse(dueDate);
+
         if(!sort.equals("")){
             return sortBy(sort, alignment);
         }
@@ -64,6 +63,8 @@ public class ToDoAppServices {
             return filterByPriority(priority);
         }
         else if(!dueDate.equals("")){
+            DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+            Date date = df.parse(dueDate);
             return filterByDueDate(date);
         }
         else{

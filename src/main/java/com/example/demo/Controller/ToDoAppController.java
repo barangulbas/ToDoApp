@@ -36,11 +36,15 @@ public class ToDoAppController {
         return "deleted";
     }
 
+    @RequestMapping("/task/complete")
+    public void completeOrNot(@RequestParam(defaultValue = "false")Boolean complete){
+
+    }
     @RequestMapping("/task")
     public List<ToDoApp> getAllOrSortOrFilter(@RequestParam(defaultValue = "") String sort,
                                               @RequestParam(defaultValue = "") String label,
                                               @RequestParam (defaultValue = "0") Long priority,
-                                              @RequestParam(defaultValue = "2010/01/04") String dueDate,
+                                              @RequestParam(defaultValue = "") String dueDate,
                                               @RequestParam(defaultValue = "Asc") String alignment) throws Exception {
         return toDoAppServices.getParameter(sort, label, priority, dueDate, alignment);
     }

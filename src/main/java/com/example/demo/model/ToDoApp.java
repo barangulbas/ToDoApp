@@ -21,6 +21,7 @@ public class ToDoApp {
     private Date dueDate;
     private String task;
     private String label;
+    private Boolean complete;
 
     public Long getId() {
         return id;
@@ -62,14 +63,23 @@ public class ToDoApp {
         this.label = label;
     }
 
+    public Boolean getComplete() {
+        return complete;
+    }
+
+    public void setComplete(Boolean complete) {
+        this.complete = complete;
+    }
+
     @Override
     public String toString() {
         return "ToDoApp{" +
                 "id=" + id +
                 ", priority=" + priority +
-                ", dueDate='" + dueDate.getTime() + '\'' +
+                ", dueDate=" + dueDate +
                 ", task='" + task + '\'' +
                 ", label='" + label + '\'' +
+                ", complete=" + complete +
                 '}';
     }
 }
