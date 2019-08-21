@@ -7,11 +7,9 @@ import org.springframework.stereotype.Service;
 
 
 import java.text.DateFormat;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
-import java.util.Locale;
 import java.util.Optional;
 
 @Service
@@ -41,9 +39,20 @@ public class ToDoAppServices {
         return task;
     }
 
-    public ToDoApp saveOrUpdateTask(ToDoApp task){
-        toDoAppRepo.save(task);
-        return task;
+    public ToDoApp saveOrUpdateTask(ToDoApp task, Long id){
+
+        ToDoApp taskToUpdate = toDoAppRepo.getOne(id);
+        if (task.getTask() != null) {
+            taskToUpdate.setTask(task.getTask());
+        }
+        if (task.getComplete() != taskToUpdate.getComplete()) {
+            taskToUpdate.setComplete(task.getComplete());
+        }
+        taskToUpdate.setComplete(task.getComplete());
+        taskToUpdate.setDueDate(task.getDueDate());
+        taskToUpdate.setPriority(task.getPriority());
+        toDoAppRepo.save(taskToUpdate);
+        return taskToUpdate;
     }
 
     public void deleteTask(Long id){

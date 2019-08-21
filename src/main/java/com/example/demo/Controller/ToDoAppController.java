@@ -1,11 +1,13 @@
 package com.example.demo.Controller;
 
 import com.example.demo.Services.ToDoAppServices;
+import com.example.demo.model.JwtUser;
 import com.example.demo.model.ToDoApp;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Date;
+import javax.validation.Valid;
 import java.util.List;
 import java.util.Optional;
 
@@ -25,9 +27,16 @@ public class ToDoAppController {
         return toDoAppServices.createTask(task);
     }
 
-    @PutMapping("/task/edit")
-    public ToDoApp editTask(@RequestBody ToDoApp task) {
-        return toDoAppServices.saveOrUpdateTask(task);
+    @PutMapping(value = "/task/edit/{id}", consumes = {
+            MediaType.APPLICATION_XML_VALUE,
+            MediaType.APPLICATION_JSON_VALUE
+            },
+            produces = {
+                MediaType.APPLICATION_XML_VALUE,
+                MediaType.APPLICATION_JSON_VALUE
+                })
+    public ToDoApp editTask(@Valid @RequestBody ToDoApp task, @PathVariable Long id) {
+        return toDoAppServices.saveOrUpdateTask(task, id);
     }
 
     @DeleteMapping("/task/delete/{id}")
@@ -47,5 +56,10 @@ public class ToDoAppController {
                                               @RequestParam(defaultValue = "") String dueDate,
                                               @RequestParam(defaultValue = "Asc") String alignment) throws Exception {
         return toDoAppServices.getParameter(sort, label, priority, dueDate, alignment);
+    }
+
+    @RequestMapping("/signin")
+    public String successful(){
+        return "Hello ";
     }
 }
