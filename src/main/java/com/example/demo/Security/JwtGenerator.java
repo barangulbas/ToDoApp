@@ -14,13 +14,12 @@ public class JwtGenerator {
 
         Claims claims = Jwts.claims()
                 .setSubject(jwtUser.getEmail());
-        claims.put("userName", jwtUser.getUserName());
         claims.put("password", jwtUser.getPassword());
-        claims.put("role", jwtUser.getRole());
 
         return Jwts.builder()
                 .setClaims(claims)
                 .signWith(SignatureAlgorithm.HS512, "unco")
                 .compact();
+
     }
 }
