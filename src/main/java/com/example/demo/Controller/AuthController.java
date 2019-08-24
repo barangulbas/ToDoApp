@@ -29,7 +29,7 @@ import java.net.URI;
 import java.util.Collections;
 
 @RestController
-//@RequestMapping("/api/auth")
+@RequestMapping("/api/auth")
 public class AuthController {
 
     @Autowired

@@ -3,10 +3,7 @@ package com.example.demo.model;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.util.Date;
 
 @Entity
@@ -16,11 +13,17 @@ public class ToDoApp {
 
     @Id
     @GeneratedValue
+    @Column(name="id")
     private Long id;
+    @Column(name="priority")
     private Long priority;
+    @Column(name="dueDate")
     private Date dueDate;
+    @Column(name="task")
     private String task;
+    @Column(name="label")
     private String label;
+    @Column(name="complete")
     private Boolean complete;
 
     public Long getId() {

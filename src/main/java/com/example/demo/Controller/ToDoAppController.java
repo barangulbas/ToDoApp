@@ -10,41 +10,43 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
+@RequestMapping("/api/task")
 public class ToDoAppController {
 
     @Autowired
     private ToDoAppServices toDoAppServices;
 
-    @RequestMapping("/task/{id}")
+    @GetMapping("/{id}")
     public Optional<ToDoApp> getSpecificTask(@PathVariable Long id) {
         return toDoAppServices.getTask(id);
     }
 
-    @PostMapping("/task/create")
+    @PostMapping("/create")
     public ToDoApp createNewTask(@RequestBody ToDoApp task) throws Exception{
         return toDoAppServices.createTask(task);
     }
 
-    @PutMapping("/task/edit")
+    @PutMapping("/edit")
     public ToDoApp editTask(@RequestBody ToDoApp task) {
         return toDoAppServices.saveOrUpdateTask(task);
     }
 
-    @DeleteMapping("/task/delete/{id}")
+    @DeleteMapping("/delete/{id}")
     public String deleteSelectedTask(@PathVariable Long id){
         toDoAppServices.deleteTask(id);
         return "deleted";
     }
 
-    @RequestMapping("/task/complete")
+    @GetMapping("/complete")
     public void completeOrNot(@RequestParam(defaultValue = "false")Boolean complete){
 
     }
-    @RequestMapping("/task")
-    public List<ToDoApp> getAllOrSortOrFilter(@RequestParam(defaultValue = "") String sort,
-                                              @RequestParam(defaultValue = "") String label,
-                                              @RequestParam (defaultValue = "0") Long priority,
-                                              @RequestParam(defaultValue = "") String dueDate,
+
+    @GetMapping("")
+    public List<ToDoApp> getAllOrSortOrFilter(@RequestParam(required = false) String sort,
+                                              @RequestParam(required = false) String label,
+                                              @RequestParam (required = false) Long priority,
+                                              @RequestParam(required = false) String dueDate,
                                               @RequestParam(defaultValue = "Asc") String alignment) throws Exception {
         return toDoAppServices.getParameter(sort, label, priority, dueDate, alignment);
     }
