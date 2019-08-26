@@ -1,8 +1,11 @@
 package com.example.demo.Services;
 
 import com.example.demo.Repositories.ToDoAppRepo;
+
 import com.example.demo.model.ToDoApp;
+import com.example.demo.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
 
@@ -20,6 +23,8 @@ public class ToDoAppServices {
     @Autowired
     public ToDoAppRepo toDoAppRepo;
 
+//    @Autowired
+//    public User user;
 
     public ToDoAppServices(){
 
@@ -33,17 +38,31 @@ public class ToDoAppServices {
         return toDoAppRepo.findById(id);
     }
 
-    public ToDoApp createTask(ToDoApp task) throws Exception {
-        if (task.getTask().isEmpty()){
+    public ToDoApp createTask(ToDoApp task, User auth) throws Exception {
+        if (task.getTask().isEmpty()) {
             throw new Exception("Shouldn't be empty");
         }
-        toDoAppRepo.save(task);
+        task.setUser(auth);
+        try {
+            toDoAppRepo.save(task);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
         return task;
     }
 
-    public ToDoApp saveOrUpdateTask(ToDoApp task){
-        toDoAppRepo.save(task);
-        return task;
+    public ToDoApp saveOrUpdateTask(ToDoApp task, Long id){
+        return toDoAppRepo.findById(id)
+                .map(newTask ->{
+                    newTask.setComplete(task.getComplete());
+                    newTask.setDueDate(task.getDueDate());
+                    newTask.setPriority(task.getPriority());
+                    return toDoAppRepo.save(newTask);
+                })
+                .orElseGet(()->{
+                    task.setId(id);
+                    return toDoAppRepo.save(task);
+                });
     }
 
     public void deleteTask(Long id){
@@ -53,16 +72,16 @@ public class ToDoAppServices {
 
     public List<ToDoApp> getParameter(String sort, String label, Long priority, String dueDate, String alignment) throws Exception {
 
-        if(!sort.equals("")){
+        if(sort != null ){
             return sortBy(sort, alignment);
         }
-        else if(!label.equals("")){
+        else if(label != null){
             return filterByLabel(label);
         }
-        else if(priority!=0){
+        else if(priority != null){
             return filterByPriority(priority);
         }
-        else if(!dueDate.equals("")){
+        else if(dueDate != null){
             DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
             Date date = df.parse(dueDate);
             return filterByDueDate(date);

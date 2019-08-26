@@ -1,10 +1,16 @@
 package com.example.demo.Controller;
 
+import com.example.demo.Repositories.UserRepository;
 import com.example.demo.Services.ToDoAppServices;
 import com.example.demo.model.ToDoApp;
+import com.example.demo.model.User;
+import com.example.demo.security.UserPrincipal;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -15,6 +21,8 @@ public class ToDoAppController {
 
     @Autowired
     private ToDoAppServices toDoAppServices;
+    @Autowired
+    private UserRepository userRepository;
 
     @GetMapping("/{id}")
     public Optional<ToDoApp> getSpecificTask(@PathVariable Long id) {
@@ -23,23 +31,22 @@ public class ToDoAppController {
 
     @PostMapping("/create")
     public ToDoApp createNewTask(@RequestBody ToDoApp task) throws Exception{
-        return toDoAppServices.createTask(task);
+//        String userName = authentication.getName();
+//       Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        UserPrincipal userPrincipal = (UserPrincipal) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        User user = userRepository.findById(userPrincipal.getId()).get();
+        return toDoAppServices.createTask(task, user);
     }
 
-    @PutMapping("/edit")
-    public ToDoApp editTask(@RequestBody ToDoApp task) {
-        return toDoAppServices.saveOrUpdateTask(task);
+    @PutMapping("/edit/{id}")
+    public ToDoApp editTask(@RequestBody ToDoApp task, @PathVariable Long id) {
+        return toDoAppServices.saveOrUpdateTask(task,id);
     }
 
     @DeleteMapping("/delete/{id}")
     public String deleteSelectedTask(@PathVariable Long id){
         toDoAppServices.deleteTask(id);
         return "deleted";
-    }
-
-    @GetMapping("/complete")
-    public void completeOrNot(@RequestParam(defaultValue = "false")Boolean complete){
-
     }
 
     @GetMapping("")
