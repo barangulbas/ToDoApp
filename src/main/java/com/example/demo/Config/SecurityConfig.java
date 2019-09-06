@@ -1,5 +1,7 @@
 package com.example.demo.Config;
 
+import com.example.demo.Repositories.RoleRepository;
+import com.example.demo.Services.AuthServices;
 import com.example.demo.model.User;
 import com.example.demo.security.CustomUserDetailsService;
 import com.example.demo.security.JwtAuthenticationEntryPoint;
@@ -40,6 +42,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         return new JwtAuthenticationFilter();
     }
 
+
     @Bean
     public User findUser(){
         return new User();
@@ -61,6 +64,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         return new CustomUserDetailsService();
     }
 
+
     @Bean
     public PasswordEncoder passwordEncoder(){
         return new BCryptPasswordEncoder();
@@ -68,10 +72,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-
-//        http.authorizeRequests().antMatchers("*").authenticated();
-//        http.authorizeRequests().anyRequest().permitAll();
-//        http.cors().and().csrf().disable();
 
         http
                 .cors()

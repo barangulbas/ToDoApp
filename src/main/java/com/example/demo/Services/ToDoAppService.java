@@ -5,37 +5,30 @@ import com.example.demo.Repositories.ToDoAppRepo;
 import com.example.demo.model.ToDoApp;
 import com.example.demo.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
 
 import java.text.DateFormat;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
-import java.util.Locale;
-import java.util.Optional;
 
 @Service
-public class ToDoAppServices {
+public class ToDoAppService {
+
+    private ToDoAppRepo toDoAppRepo;
 
     @Autowired
-    public ToDoAppRepo toDoAppRepo;
-
-//    @Autowired
-//    public User user;
-
-    public ToDoAppServices(){
-
+    public ToDoAppService(ToDoAppRepo toDoAppRepo){
+        this.toDoAppRepo = toDoAppRepo;
     }
 
     public List<ToDoApp> getTasks(){
         return toDoAppRepo.findAll();
     }
 
-    public Optional<ToDoApp> getTask(Long id) {
-        return toDoAppRepo.findById(id);
+    public ToDoApp getTask(Long id) {
+        return toDoAppRepo.getOne(id);
     }
 
     public ToDoApp createTask(ToDoApp task, User auth) throws Exception {
@@ -66,8 +59,9 @@ public class ToDoAppServices {
     }
 
     public void deleteTask(Long id){
-        ToDoApp tsk = toDoAppRepo.getOne(id);
-        toDoAppRepo.delete(tsk);
+
+        ToDoApp deletedTask = toDoAppRepo.getOne(id);
+        toDoAppRepo.delete(deletedTask);
     }
 
     public List<ToDoApp> getParameter(String sort, String label, Long priority, String dueDate, String alignment) throws Exception {

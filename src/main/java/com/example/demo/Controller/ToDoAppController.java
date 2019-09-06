@@ -1,40 +1,36 @@
 package com.example.demo.Controller;
 
 import com.example.demo.Repositories.UserRepository;
-import com.example.demo.Services.ToDoAppServices;
+import com.example.demo.Services.ToDoAppService;
 import com.example.demo.model.ToDoApp;
 import com.example.demo.model.User;
 import com.example.demo.security.UserPrincipal;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
-import java.security.Principal;
-import java.util.Date;
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/task")
 public class ToDoAppController {
 
     @Autowired
-    private ToDoAppServices toDoAppServices;
+    private ToDoAppService toDoAppServices;
     @Autowired
     private UserRepository userRepository;
 
     @GetMapping("/{id}")
-    public Optional<ToDoApp> getSpecificTask(@PathVariable Long id) {
+    public ToDoApp getSpecificTask(@PathVariable Long id) {
         return toDoAppServices.getTask(id);
     }
 
     @PostMapping("/create")
     public ToDoApp createNewTask(@RequestBody ToDoApp task) throws Exception{
-//        String userName = authentication.getName();
-//       Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        UserPrincipal userPrincipal = (UserPrincipal) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        User user = userRepository.findById(userPrincipal.getId()).get();
+        UserPrincipal userPrincipal = (UserPrincipal) SecurityContextHolder.getContext()
+                .getAuthentication()
+                .getPrincipal();
+        User user = userRepository.getOne(userPrincipal.getId());
         return toDoAppServices.createTask(task, user);
     }
 
