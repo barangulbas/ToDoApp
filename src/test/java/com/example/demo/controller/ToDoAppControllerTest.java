@@ -32,7 +32,7 @@ public class ToDoAppControllerTest {
     private ToDoAppController toDoAppController;
 
     @Mock
-    private ToDoAppService toDoAppServices;
+    private ToDoAppService toDoAppService;
 
     @Mock
     private SecurityContext securityContext;
@@ -63,13 +63,13 @@ public class ToDoAppControllerTest {
         ToDoApp request = createDummyTask();
         dummyTask.setId(taskId);
 
-        when(toDoAppServices.getTask(taskId)).thenReturn(request);
+        when(toDoAppService.getTask(taskId)).thenReturn(request);
         //When
         ToDoApp response = toDoAppController.getSpecificTask(taskId);
         //Then
         assertThat(response).isNotEqualTo(dummyTask);
 
-        verify(toDoAppServices).getTask(taskId);
+        verify(toDoAppService).getTask(taskId);
     }
 
     @Test
@@ -87,7 +87,7 @@ public class ToDoAppControllerTest {
         when(authentication.getPrincipal()).thenReturn(userPrincipal);
         when(userRepository.getOne(1L)).thenReturn(user);
         try {
-            when(toDoAppServices.createTask(request, user)).thenReturn(task);
+            when(toDoAppService.createTask(request, user)).thenReturn(task);
         } catch (Exception ignored) {}
 
         try {
@@ -110,11 +110,11 @@ public class ToDoAppControllerTest {
         ToDoApp dummyTask = createDummyTask();
         final Long id = dummyTask.getId();
 
-        when(toDoAppServices.saveOrUpdateTask(dummyTask,id)).thenReturn(dummyTask);
+        when(toDoAppService.saveOrUpdateTask(dummyTask,id)).thenReturn(dummyTask);
         //When
         toDoAppController.editTask(dummyTask,id);
         //Then
-        verify(toDoAppServices).saveOrUpdateTask(dummyTask,id);
+        verify(toDoAppService).saveOrUpdateTask(dummyTask,id);
     }
 
     @Test
@@ -125,8 +125,9 @@ public class ToDoAppControllerTest {
         //When
         toDoAppController.deleteSelectedTask(id);
         //Then
-        verify(toDoAppServices).deleteTask(id);
+        verify(toDoAppService).deleteTask(id);
     }
+
 
 
 
