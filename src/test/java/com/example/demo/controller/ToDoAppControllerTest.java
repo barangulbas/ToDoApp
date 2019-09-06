@@ -128,11 +128,7 @@ public class ToDoAppControllerTest {
         verify(toDoAppServices).deleteTask(id);
     }
 
-    @Test
-    public void given_parameters_when_get_all_or_sort_or_filter_called_then_return_task_list(){
 
-
-    }
 
 
 
