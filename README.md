@@ -5,7 +5,7 @@ ___
 This project was created by using java-based framework [Spring Boot](https://spring.io/projects/spring-boot) and [PostgreSql](https://www.postgresql.org) was chosen as the database. 
 ## Installation
 
-IntelliJ is a good option as IDE to run Spring Boot applications easily. To clone the repository on your computer, check the [link.](https://github.com/barangulbas/ToDoApp)
+IntelliJ is a good option as IDE to run Spring Boot applications easily. To clone the repository on your computer, check the [link.](https://help.github.com/en/articles/cloning-a-repository)
 ## Usage
 
 Swagger is used for testing. Type "localhost:8080" to your browser, swagger will open automatically. 
