@@ -1,4 +1,4 @@
-package com.example.demo.Security;
+package com.example.demo.security;
 
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;

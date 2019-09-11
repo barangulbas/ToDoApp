@@ -1,8 +1,9 @@
-package com.example.demo.Security;
+package com.example.demo.security;
 
 import com.example.demo.model.JwtAuthenticationToken;
 import com.example.demo.model.JwtUseDetails;
 import com.example.demo.model.JwtUser;
+import com.example.demo.security.JwtValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.authentication.dao.AbstractUserDetailsAuthenticationProvider;
@@ -18,7 +19,7 @@ import java.util.List;
 public class JwtAuthenticationProvider extends AbstractUserDetailsAuthenticationProvider {
 
     @Autowired
-    private com.example.demo.Security.JwtValidator validator;
+    private JwtValidator validator;
 
     @Override
     protected void additionalAuthenticationChecks(UserDetails userDetails, UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken) throws AuthenticationException {

@@ -1,6 +1,6 @@
-package com.example.demo.Controller;
+package com.example.demo.controller;
 
-import com.example.demo.Security.JwtGenerator;
+import com.example.demo.security.JwtGenerator;
 import com.example.demo.model.JwtUser;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;

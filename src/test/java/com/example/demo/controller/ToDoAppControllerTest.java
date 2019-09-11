@@ -1,9 +1,8 @@
 package com.example.demo.controller;
 
 
-import com.example.demo.Controller.ToDoAppController;
-import com.example.demo.Repositories.UserRepository;
-import com.example.demo.Services.ToDoAppService;
+import com.example.demo.repository.UserRepository;
+import com.example.demo.service.ToDoAppService;
 import com.example.demo.model.ToDoApp;
 import com.example.demo.model.User;
 import com.example.demo.security.UserPrincipal;
@@ -119,6 +118,10 @@ public class ToDoAppControllerTest {
 
     @Test
     public void given_id_when_delete_selected_task_called_then_return_string(){
+
+        //
+        //
+        //
 
         //Given
         final Long id = 1L;

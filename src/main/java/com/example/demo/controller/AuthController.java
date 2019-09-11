@@ -1,6 +1,6 @@
-package com.example.demo.Controller;
+package com.example.demo.controller;
 
-import com.example.demo.Services.AuthServices;
+import com.example.demo.service.AuthServices;
 import com.example.demo.payload.LoginRequest;
 import com.example.demo.payload.SignUpRequest;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,7 +1,6 @@
 package com.example.demo.service;
 
-import com.example.demo.Repositories.ToDoAppRepo;
-import com.example.demo.Services.ToDoAppService;
+import com.example.demo.repository.ToDoAppRepo;
 import com.example.demo.model.ToDoApp;
 import com.example.demo.model.User;
 import org.junit.Test;

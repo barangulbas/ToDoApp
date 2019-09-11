@@ -1,7 +1,7 @@
-package com.example.demo.Services;
+package com.example.demo.service;
 
-import com.example.demo.Repositories.RoleRepository;
-import com.example.demo.Repositories.UserRepository;
+import com.example.demo.repository.RoleRepository;
+import com.example.demo.repository.UserRepository;
 import com.example.demo.exception.AppException;
 import com.example.demo.model.Role;
 import com.example.demo.model.RoleName;

@@ -1,7 +1,7 @@
-package com.example.demo.Controller;
+package com.example.demo.controller;
 
-import com.example.demo.Repositories.UserRepository;
-import com.example.demo.Services.ToDoAppService;
+import com.example.demo.repository.UserRepository;
+import com.example.demo.service.ToDoAppService;
 import com.example.demo.model.ToDoApp;
 import com.example.demo.model.User;
 import com.example.demo.security.UserPrincipal;
