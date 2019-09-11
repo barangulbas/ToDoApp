@@ -119,9 +119,7 @@ public class ToDoAppControllerTest {
     @Test
     public void given_id_when_delete_selected_task_called_then_return_string(){
 
-        //
-        //
-        //
+        //this test will be changed
 
         //Given
         final Long id = 1L;

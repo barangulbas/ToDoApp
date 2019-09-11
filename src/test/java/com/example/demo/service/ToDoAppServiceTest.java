@@ -90,18 +90,12 @@ public class ToDoAppServiceTest {
         when(toDoAppRepo.save(task)).thenReturn(task);
 
         //When
-        toDoAppServices.createTask(task,user);
+        ToDoApp response = toDoAppServices.createTask(task,user);
 
         //Then
-        verify(toDoAppRepo).save(task);
+        assertThat(task).isEqualTo(response);
+
     }
-
-
-
-
-
-
-
 
     @Test
     public void given_test_data_when_deleteTask_called_then_it_should_verify_task_is_deleted() {
@@ -120,21 +114,10 @@ public class ToDoAppServiceTest {
         verify(toDoAppRepo).delete(toDoApp);
     }
 
-
-//    @Test
-//    public void given_test_inputs_when_getParameter_called_then_it_should_verify_related_method() throws Exception {
-//
-//        //Given
-//
-//
-//        //When
-//        toDoAppServices.getParameter("priority",null,null,null,"Asc");
-//
-//        //Then
-//        verify(toDoAppServices).sortBy("priority","Asc");
-//    }
     @Test
     public void when_given_parameters_then_call_related_methods_at_least_once() throws Exception {
+
+        //this test will be changed
 
         //When
         toDoAppServices.sortBy("priority","Asc");
@@ -151,32 +134,24 @@ public class ToDoAppServiceTest {
         verify(toDoAppRepo).findByOrderByDueDateDesc();
     }
 
-    //
-    //
-    //
-    //
-
     @Test
     public void given_data_when_type_label_then_call_filterByLabel_method_at_least_once(){
-//according to the given dummyTask, label="work", however it is expected that method filter the tasks due to label="moto".
-//In this test it doesnot filter by label="moto", it directly takes the dummyTask.
+
         //Given
         String label = "motorcycle";
 
-        ToDoApp dummyTask = createDummyTask();
-        List<ToDoApp> request = Collections.singletonList(dummyTask);
-        List<ToDoApp> dummyList = Collections.singletonList(dummyTask);
-        when(toDoAppRepo.findByLabel(label)).thenReturn(dummyList);
+        ToDoApp task1 = createDummyTask();
+        task1.setLabel(label);
+
+        List<ToDoApp> toDoAppList = Collections.singletonList(task1);
+        when(toDoAppRepo.findByLabel(label)).thenReturn(toDoAppList);
 
         //When
-        try {
-            List<ToDoApp> response = toDoAppServices.filterByLabel(label);
+        List<ToDoApp> response = toDoAppServices.filterByLabel(label);
+
         //Then
-            assertThat(response).isEqualTo(request);
-            verify(toDoAppRepo).findByLabel(label);
-        } catch (Exception ignored){
-            fail("not equal");
-        }
+        assertFalse(response.isEmpty());
+        assertThat(response.get(0).getLabel()).isEqualTo(label);
 
     }
 
@@ -186,11 +161,18 @@ public class ToDoAppServiceTest {
         //Given
         Long priority = 3L;
 
+        ToDoApp task = createDummyTask();
+        task.setPriority(priority);
+
+        List<ToDoApp> list = Collections.singletonList(task);
+        when(toDoAppRepo.findByPriority(priority)).thenReturn(list);
         //When
-        toDoAppServices.filterByPriority(priority);
+        List<ToDoApp> response = toDoAppServices.filterByPriority(priority);
 
         //Then
-        verify(toDoAppRepo).findByPriority(priority);
+        assertFalse(response.isEmpty());
+        assertThat(response.get(0).getPriority()).isEqualTo(priority);
+
     }
     @Test
     public void given_data_when_filterByDueDate_called_then_call_findByDueDate_at_least_once(){
@@ -198,10 +180,17 @@ public class ToDoAppServiceTest {
         //Given
         Date dueDate = new Date();
 
+        ToDoApp task = createDummyTask();
+        task.setDueDate(dueDate);
+
+        List<ToDoApp> list = Collections.singletonList(task);
+        when(toDoAppRepo.findByDueDate(dueDate)).thenReturn(list);
         //When
-        toDoAppServices.filterByDueDate(dueDate);
+        List<ToDoApp> response = toDoAppServices.filterByDueDate(dueDate);
 
         //Then
-        verify(toDoAppRepo).findByDueDate(dueDate);
+        assertFalse(response.isEmpty());
+        assertThat(response.get(0).getDueDate()).isEqualTo(dueDate);
+
     }
 }
